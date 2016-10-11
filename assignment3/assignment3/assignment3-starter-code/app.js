@@ -14,7 +14,6 @@
 					menu: '=foundItems',
 					onRemove: '&'
 				}
-				
 		};
 		return ddo;
 	}
@@ -36,7 +35,6 @@
 		
 		
 		menu.removeItem = function(itemIndex){
-			console.log("IN menu.removeItem");
 			MenuSearchService.removeItem(itemIndex);
 		};
 		
@@ -45,7 +43,7 @@
 	MenuSearchService.$inject = ['$http','ApiBasePath'];
 	function MenuSearchService($http,ApiBasePath){
 		var service = this;
-		var filterList = [] ;
+		var filterList = new Array() ;
 		
 		service.getMatchedMenuItems = function(searchTerm){
 			var response = $http({
@@ -67,11 +65,11 @@
 				
 				for(var i=0;i<response1.length;i++){
 					var itemName = response1[i].name;
+					var itemshortName = response1[i].short_name;
 					var itemDesc = response1[i].description;
+					var itemFullName= itemName+":"+itemshortName+":"+itemDesc;
 					if(itemDesc.toLocaleLowerCase().indexOf(filter) !== -1){
-						if(filterList.indexOf(itemName) === -1){
-							filterList.push(itemName);
-						}
+						filterList.push(itemFullName);
 						
 					}
 				}
